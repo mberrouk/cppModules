@@ -1,16 +1,16 @@
-SRC       = main.cpp Zombie.cpp  newZombie.cpp  randomChump.cpp
+SRC       = main.cpp  Zombie.cpp  zombieHorde.cpp
 CPPFLAGS  = -Wall  -Wextra  -Werror  -std=c++98
-NAME      = Zombie
+NAME      = Zombies
 OBJS      = $(SRC:.cpp=.o)
-CC        = c++ -g -fsanitize=address
+CC        = c++ -fsanitize=address -g
 
 all       : $(NAME)
 
 $(NAME)   : $(OBJS)
-	$(CC)  $(CPPFLAGS)  $(OBJS)  -o $(NAME)
+	$(CC)  $(CPPFLAGS) $(OBJS)  -o  $(NAME)
 
 %.o       : %.cpp
-	$(CC)  $(CPPFLAGS)  -c  $^  -o  $@
+	$(CC)  $(CPPFLAGS)  -c  $^ -o $@
 
 clean     :
 	rm  -f  *.o
