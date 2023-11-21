@@ -1,4 +1,4 @@
-SRC       = main.cpp 
+SRC       = main.cpp Sed.cpp 
 CC        = c++
 CPPFLAGS  = -Wall -Wextra -Werror
 OBJS      = $(SRC:.cpp=.o)
