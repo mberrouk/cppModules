@@ -1,6 +1,7 @@
 #include "ClapTrap.hpp"
 
 int main () {
+	ClapTrap x;
 	ClapTrap a("Player-I");
 	ClapTrap b("Player-II");
 
