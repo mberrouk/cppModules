@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/27 22:01:45 by mberrouk          #+#    #+#             */
+/*   Updated: 2023/11/27 23:28:59 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ClapTrap.hpp"
 #include <iostream>
 
@@ -61,8 +73,8 @@ void ClapTrap::beRepaired( unsigned int amount) {
 		return ;
 	}
 	this->energyPoints -= 1;
-	if (this->hitPoints + amount > 10)
-		this->hitPoints = 10;
+	if ( amount > UINT32_MAX - this->hitPoints )
+		this->hitPoints = UINT32_MAX;
 	else
 		this->hitPoints += amount;
 	std::cout << "ClapTrap " << name << " has repaired and now has a new"

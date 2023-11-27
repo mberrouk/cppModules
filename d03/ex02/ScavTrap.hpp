@@ -6,7 +6,7 @@
 /*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 22:01:41 by mberrouk          #+#    #+#             */
-/*   Updated: 2023/11/27 22:50:43 by mberrouk         ###   ########.fr       */
+/*   Updated: 2023/11/27 22:56:52 by mberrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ class ScavTrap: public ClapTrap {
 		ScavTrap& operator=( const ScavTrap &src );
 		~ScavTrap( void );
 		void guardGate( void );
-		void attack(const std::string& target);
-		
+		void attack( const std::string& target );
 };
 
 #endif // !SCAVTRAP_HPP

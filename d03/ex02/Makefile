@@ -5,14 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/27 22:01:20 by mberrouk          #+#    #+#              #
-#    Updated: 2023/11/27 22:59:38 by mberrouk         ###   ########.fr        #
+#    Created: 2023/11/27 22:01:56 by mberrouk          #+#    #+#              #
+#    Updated: 2023/11/27 22:59:26 by mberrouk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC       = main.cpp ClapTrap.cpp
+SRC       = main.cpp ClapTrap.cpp FragTrap.cpp
 CPPFLAGS  = -Wall  -Wextra  -Werror  -std=c++98
-NAME      = ClapTrap
+NAME      = FragTrap
 OBJS      = $(SRC:.cpp=.o)
 CC        = c++
 

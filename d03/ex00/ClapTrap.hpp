@@ -1,5 +1,17 @@
-#ifndef CLAPTRAO_HPP
-#define CLAPTRAO_HPP
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/27 22:01:15 by mberrouk          #+#    #+#             */
+/*   Updated: 2023/11/27 22:06:43 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CLAPTRAP_HPP
+#define CLAPTRAP_HPP
 
 #include <string>
 
