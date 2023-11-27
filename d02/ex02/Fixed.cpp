@@ -16,7 +16,7 @@ Fixed::Fixed( const float num ) {
 	this->fixedPoint = roundf(num * (1 << fractional));
 }
 
-Fixed& Fixed::operator=( const Fixed &source ) {
+Fixed Fixed::operator=( const Fixed &source ) {
 	if (this != &source)
 		this->fixedPoint = source.fixedPoint;
 	return (*this);

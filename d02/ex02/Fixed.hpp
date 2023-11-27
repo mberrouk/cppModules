@@ -12,7 +12,7 @@ class Fixed{
 		Fixed( const Fixed& );
 		Fixed( const int );
 		Fixed( const float );
-		Fixed& operator= ( const Fixed &source );
+		Fixed operator= ( const Fixed &source );
 		bool operator> ( const Fixed &obj );
 		bool operator< ( const Fixed &obj );
 		bool operator>= ( const Fixed &obj );

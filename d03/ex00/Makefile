@@ -1,8 +1,8 @@
-SRC       = main.cpp Zombie.cpp  newZombie.cpp  randomChump.cpp
+SRC       = main.cpp ClapTrap.cpp
 CPPFLAGS  = -Wall  -Wextra  -Werror  -std=c++98
-NAME      = Zombie
+NAME      = ClapTrap
 OBJS      = $(SRC:.cpp=.o)
-CC        = c++ -g -fsanitize=address
+CC        = c++
 
 all       : $(NAME)
 
@@ -18,4 +18,4 @@ clean     :
 fclean    : clean
 	rm  -f  $(NAME)
 
-re        : fclean          all
+re        : fclean  all
