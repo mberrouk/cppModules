@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/27 22:01:18 by mberrouk          #+#    #+#             */
+/*   Updated: 2023/11/27 22:48:37 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ClapTrap.hpp"
 
 int main () {
@@ -28,7 +40,7 @@ int main () {
 	b.attack("Player-I");
 	b.attack("Player-I");
 
-	/** a be repaired (new hit-point 10) energy spent**/
+	/** a be repaired (new hit-point 704) energy spent**/
 	a.beRepaired(700);
 
 	/** b can't do anything, all energy point spent**/

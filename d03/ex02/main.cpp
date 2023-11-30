@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/27 22:01:41 by mberrouk          #+#    #+#             */
-/*   Updated: 2023/11/27 22:50:43 by mberrouk         ###   ########.fr       */
+/*   Created: 2023/11/27 22:01:53 by mberrouk          #+#    #+#             */
+/*   Updated: 2023/11/27 22:43:06 by mberrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCAVTRAP_HPP
-#define SCAVTRAP_HPP
+#include "FragTrap.hpp"
 
-#include "ClapTrap.hpp"
+int main () {
+	FragTrap x;
+	FragTrap player("Player-I");
+	FragTrap player1("Player-II");
 
-class ScavTrap: public ClapTrap {
-	public:
-		ScavTrap( void );
-		ScavTrap( std::string );
-		ScavTrap( const ScavTrap& );
-		ScavTrap& operator=( const ScavTrap &src );
-		~ScavTrap( void );
-		void guardGate( void );
-		void attack(const std::string& target);
-		
-};
-
-#endif // !SCAVTRAP_HPP
+	player.attack("Player-II");
+	player1.attack("Player-II");
+	player.highFivesGuys();
+	return (0);
+}
