@@ -2,8 +2,12 @@
 #define CAT_HPP
 
 #include "Animal.hpp"
+#include "Brain.hpp"
 
 class Cat: public Animal {
+	protected:
+		Brain *brainIdeas;
+
 	public:
 		Cat( void );
 		Cat( const Cat & );
