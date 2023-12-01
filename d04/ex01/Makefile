@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/01 16:26:50 by mberrouk          #+#    #+#              #
+#    Updated: 2023/12/01 16:26:51 by mberrouk         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRC       = main.cpp Animal.cpp Dog.cpp Cat.cpp WrongCat.cpp WrongAnimal.cpp Brain.cpp
 INCLUDES  = Animal.hpp Dog.hpp Cat.hpp WrongAnimal.hpp WrongCat.hpp Brain.hpp
 CPPFLAGS  = -Wall  -Wextra  -Werror  -std=c++98

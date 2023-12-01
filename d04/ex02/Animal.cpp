@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Animal.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/01 16:27:05 by mberrouk          #+#    #+#             */
+/*   Updated: 2023/12/01 16:29:27 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Animal.hpp"
 
-Animal::Animal( void ): type("Undefined") {
+Animal::Animal( void ) : type("Undefined") {
 	std::cout << "Animal Default Constructor." << std::endl;
 }
 
