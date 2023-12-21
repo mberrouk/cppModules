@@ -13,9 +13,9 @@ Bureaucrat::Bureaucrat( const Bureaucrat &src) : name(src.getName()) {
 Bureaucrat::Bureaucrat(const std::string& name_arg, int grade_arg)
   : name(name_arg) {
     if (grade_arg < 1)
-      throw GradeTooHighException(); 
+      throw Bureaucrat::GradeTooHighException(); 
     else if (grade_arg > 150)
-      throw GradeTooLowException(); 
+      throw Bureaucrat::GradeTooLowException(); 
     grade = grade_arg;
 }
 
@@ -40,13 +40,13 @@ int Bureaucrat::getGrade( void ) const {
 
 void Bureaucrat::increment( void ) {
   if (grade <= 1)
-    throw GradeTooHighException();
+    throw Bureaucrat::GradeTooHighException();
   grade--;
 }
 
 void Bureaucrat::decrement( void ) {
   if (grade >=  150)
-    throw GradeTooLowException();
+    throw Bureaucrat::GradeTooLowException();
   grade++;
 
 }
