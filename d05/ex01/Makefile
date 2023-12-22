@@ -1,7 +1,7 @@
 SRC       = main.cpp Bureaucrat.cpp Form.cpp
 INCLUDES  = Bureaucrat.hpp Form.hpp 
 CPPFLAGS  = -Wall -Wextra -Werror -std=c++98
-NAME      = Bureaucrat
+NAME      = BureaucratForm
 OBJS      = $(SRC:.cpp=.o)
 CC        = c++
 
