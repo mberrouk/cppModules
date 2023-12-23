@@ -52,7 +52,7 @@ int Form::getExecGrade(void) const { return (this->exec_grade); }
 bool Form::getSign(void) const { return (this->signe); }
 
 void Form::beSigned(Bureaucrat &obj) {
-  if (obj.getGrade() <= exec_grade)
+  if (obj.getGrade() <= grade)
     signe = true;
   else
     throw Form::GradeTooLowException();
