@@ -16,7 +16,7 @@ int main() {
     test.increment();
     std::cout << "\n\t-> INFO OF (" << test.getName() << "):\n"
               << test << std::endl;
-    std::cout << "\n\tCreate Form: -- testForm(\"testForm\", 10, 10) -- "
+    std::cout << "\n\tCreate Form: -- testForm(\"testForm\", 10, 25) -- "
               << std::endl;
     Form testForm("testForm", 10, 25);
     std::cout << "\n\t-> INFO OF (" << testForm.getName() << "):\n\t"
@@ -31,18 +31,18 @@ int main() {
     std::cout << "\n[TEST II]\n\t-Prepare for an exception:"
               << "This test case is expected to trigger an "
                  "exception.\n\n**START TESTING**\n\n";
-    std::cout << "\n\tCreate Form: -- testForm(\"testForm2\", 10, 1) -- "
+    std::cout << "\n\tCreate Form: -- testForm(\"testForm2\", 1, 1) -- "
               << std::endl;
-    Form testForm2("testForm2", 10, 1);
+    Form testForm2("testForm2", 1, 1);
     std::cout << "\n\t--> Use signForm():" << std::endl << "=> \t";
     test.signForm(testForm2);
-    std::cout << "\t-> INFO OF (" << testForm2.getName() << "):\n\t" << testForm2
-              << std::endl;
+    std::cout << "\t-> INFO OF (" << testForm2.getName() << "):\n\t"
+              << testForm2 << std::endl;
     std::cout << "\n\t--> Use beSigned():" << std::endl;
-	testForm2.beSigned(test);
+    testForm2.beSigned(test);
   } catch (std::exception &exception) {
-    std::cout << "-=-(in catch)=-> An exception occured (" << exception.what() << ")"
-              << std::endl;
+    std::cout << "-=-(in catch)=-> An exception occured (" << exception.what()
+              << ")" << std::endl;
   }
   std::cout << "\n**[TEST II HAS REACHED ITS CONCLUSION]**" << std::endl;
   std::cout << std::setw(60) << std::setfill('~') << "\n" << std::endl;

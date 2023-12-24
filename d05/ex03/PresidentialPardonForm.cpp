@@ -1,7 +1,5 @@
 #include "PresidentialPardonForm.hpp"
-#include <fstream>
 #include <cstdlib>
-
 
 PresidentialPardonForm::PresidentialPardonForm()
     : AForm("PresidentialPardonForm", 72, 45), target("default") {}

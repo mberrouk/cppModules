@@ -1,6 +1,5 @@
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
-#include <algorithm>
 
 Bureaucrat::Bureaucrat(void) : name(""), grade(150) {
   std::cout << "Create Bureaucrat using default constructor." << std::endl;

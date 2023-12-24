@@ -4,7 +4,6 @@ Form::Form(void) : name("default"), signe(false), grade(150), exec_grade(150) {
   std::cout << "Form Default Constructor Called." << std::endl;
 }
 
-// TODO explicitly initialize - grade exec_grade -
 Form::Form(const Form &src)
     : name(src.getName()), signe(src.getSign()), grade(src.getGrade()),
       exec_grade(src.getExecGrade()) {}
@@ -18,7 +17,6 @@ Form::Form(const std::string &nameArg, const int gradeArg,
     throw Form::GradeTooLowException();
 }
 
-// TODO src.signe is a private membre ??
 Form &Form::operator=(const Form &src) {
   if (this != &src) {
     this->signe = src.signe;

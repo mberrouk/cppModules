@@ -66,11 +66,11 @@ int main() {
       std::cout << e.what() << std::endl;
     }
   }
-  std::cout
-      << "\n\n{Test PresidentialPardonForm::execute}\t - Ensure that a different "
-         "seed is used for the random number generator each time.\n"
-      << "-> PresidentialPardonForm:\n"
-      << std::endl;
+  std::cout << "\n\n{Test PresidentialPardonForm::execute}\t - Ensure that a "
+               "different "
+               "seed is used for the random number generator each time.\n"
+            << "-> PresidentialPardonForm:\n"
+            << std::endl;
   try {
     PresidentialPardonForm test;
     Bureaucrat tt("None", 6);

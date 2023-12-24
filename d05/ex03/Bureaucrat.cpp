@@ -1,6 +1,5 @@
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
-#include <algorithm>
 #include <exception>
 
 Bureaucrat::Bureaucrat(void) : name(""), grade(150) {

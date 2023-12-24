@@ -2,8 +2,6 @@
 #define FORM_HPP
 
 #include "Bureaucrat.hpp"
-#include <iostream>
-#include <string>
 
 class AForm {
   const std::string name;
