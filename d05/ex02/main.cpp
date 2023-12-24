@@ -36,7 +36,7 @@ int main() {
   }
   {
     std::cout << "Exceptions tests:\n" << std::endl;
-	std::cout << "-> ShrubberyCreationForm:\n" << std::endl;	
+    std::cout << "-> ShrubberyCreationForm:\n" << std::endl;
     try {
       ShrubberyCreationForm test;
       Bureaucrat tt("None", 188);
@@ -46,7 +46,7 @@ int main() {
       std::cout << e.what() << std::endl;
     }
 
-	std::cout << "-> RobotomyRequestForm:\n" << std::endl;	
+    std::cout << "-> RobotomyRequestForm:\n" << std::endl;
     try {
       RobotomyRequestForm test;
       Bureaucrat tt("None", 50);
@@ -56,7 +56,7 @@ int main() {
       std::cout << e.what() << std::endl;
     }
 
-	std::cout << "-> PresidentialPardonForm:\n" << std::endl;	
+    std::cout << "-> PresidentialPardonForm:\n" << std::endl;
     try {
       PresidentialPardonForm test;
       Bureaucrat tt("None", 6);
@@ -66,5 +66,23 @@ int main() {
       std::cout << e.what() << std::endl;
     }
   }
+  std::cout
+      << "\n\n{Test PresidentialPardonForm::execute}\t - Ensure that a different "
+         "seed is used for the random number generator each time.\n"
+      << "-> PresidentialPardonForm:\n"
+      << std::endl;
+  try {
+    PresidentialPardonForm test;
+    Bureaucrat tt("None", 6);
+    test.beSigned(tt);
+
+    test.execute(tt);
+    test.execute(tt);
+    test.execute(tt);
+    test.execute(tt);
+  } catch (std::exception &e) {
+    std::cout << e.what() << std::endl;
+  }
+
   return (0);
 }

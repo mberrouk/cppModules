@@ -2,9 +2,10 @@
 
 AForm::AForm(void)
     : name("default"), signe(false), grade(150), exec_grade(150) {
-  // std::cout << "AForm Default Constructor Called." << std::endl;
+  std::cout << "AForm Default Constructor Called." << std::endl;
 }
 
+// TODO explicitly initialize - grade exec_grade -
 AForm::AForm(const AForm &src)
     : name(src.getName()), signe(src.getSign()), grade(src.getGrade()),
       exec_grade(src.getExecGrade()) {}
@@ -18,6 +19,7 @@ AForm::AForm(const std::string &nameArg, const int gradeArg,
     throw AForm::GradeTooLowException();
 }
 
+// TODO src.signe is a private membre ??
 AForm &AForm::operator=(const AForm &src) {
   if (this != &src) {
     this->signe = src.signe;

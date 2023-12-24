@@ -1,6 +1,7 @@
 #include "PresidentialPardonForm.hpp"
-#include <cstdlib>
 #include <fstream>
+#include <cstdlib>
+
 
 PresidentialPardonForm::PresidentialPardonForm()
     : AForm("PresidentialPardonForm", 72, 45), target("default") {}
@@ -32,7 +33,7 @@ void PresidentialPardonForm::execute(Bureaucrat const &executor) const {
   flag++;
   srand(time(0) + flag);
   if (this->getSign() && (this->getExecGrade() >= executor.getGrade())) {
-    if (rand() % 2 == 0)
+    if (rand() % 2)
       std::cout << "Drilling... " << target
                 << " has been robotomized successfully 50\% of the time."
                 << std::endl;

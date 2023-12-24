@@ -4,7 +4,7 @@
 #include <exception>
 
 Bureaucrat::Bureaucrat(void) : name(""), grade(150) {
-  // std::cout << "Create Bureaucrat using default constructor." << std::endl;
+  std::cout << "Create Bureaucrat using default constructor." << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &src) : name(src.getName()) {
