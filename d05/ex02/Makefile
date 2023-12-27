@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/27 16:23:28 by mberrouk          #+#    #+#              #
+#    Updated: 2023/12/27 16:23:28 by mberrouk         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRC       = main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp PresidentialPardonForm.cpp RobotomyRequestForm.cpp
 INCLUDES  = Bureaucrat.hpp AForm.hpp ShrubberyCreationForm.hpp PresidentialPardonForm.hpp RobotomyRequestForm.hpp
 CPPFLAGS  = -Wall -Wextra -Werror -std=c++98

@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/27 16:23:11 by mberrouk          #+#    #+#              #
+#    Updated: 2023/12/27 16:23:11 by mberrouk         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRC       = main.cpp Bureaucrat.cpp Form.cpp
 INCLUDES  = Bureaucrat.hpp Form.hpp 
 CPPFLAGS  = -Wall -Wextra -Werror -std=c++98

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Intern.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/27 16:24:15 by mberrouk          #+#    #+#             */
+/*   Updated: 2023/12/27 17:47:27 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Intern.hpp"
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
@@ -11,7 +23,7 @@ Intern &Intern::operator=(const Intern &) { return (*this); }
 
 Intern::~Intern() {}
 
-int check_formName(std::string formName) {
+int check_formName(std::string &formName) {
   int i;
   std::string forms[] = {"robotomy request", "shrubbery creation",
                          "presidential pardon"};

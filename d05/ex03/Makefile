@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/27 16:25:13 by mberrouk          #+#    #+#              #
+#    Updated: 2023/12/27 16:25:13 by mberrouk         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRC       = main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp \
 			PresidentialPardonForm.cpp RobotomyRequestForm.cpp Intern.cpp
 INCLUDES  = Bureaucrat.hpp AForm.hpp ShrubberyCreationForm.hpp \

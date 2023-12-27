@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PresidentialPardonForm.cpp                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/27 16:25:15 by mberrouk          #+#    #+#             */
+/*   Updated: 2023/12/27 17:40:32 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "PresidentialPardonForm.hpp"
 #include <cstdlib>
 
 PresidentialPardonForm::PresidentialPardonForm()
-    : AForm("PresidentialPardonForm", 72, 45), target("default") {}
+    : AForm("PresidentialPardonForm", 25, 5), target("default") {}
 
 PresidentialPardonForm::PresidentialPardonForm(
     const PresidentialPardonForm &src)
-    : AForm("PresidentialPardonForm", 72, 45) {
+    : AForm("PresidentialPardonForm", 25, 5) {
   *this = src;
 }
 
@@ -23,21 +35,12 @@ PresidentialPardonForm::~PresidentialPardonForm() {
 }
 
 PresidentialPardonForm::PresidentialPardonForm(std::string &arg)
-    : AForm("PresidentialPardonForm", 72, 45), target(arg) {}
+    : AForm("PresidentialPardonForm", 25, 5), target(arg) {}
 
 void PresidentialPardonForm::execute(Bureaucrat const &executor) const {
-  static int flag;
-
-  flag++;
-  srand(time(0) + flag);
-  if (this->getSign() && (this->getExecGrade() >= executor.getGrade())) {
-    if (rand() % 2)
-      std::cout << "Drilling... " << target
-                << " has been robotomized successfully 50\% of the time."
-                << std::endl;
-    else
-      std::cout << "robotomy failed." << std::endl;
-  } else {
+  if (this->getSign() && (this->getExecGrade() >= executor.getGrade()))
+    std::cout << target << " "
+              << "has been pardoned by Zaphod Beeblebrox." << std::endl;
+  else
     throw GradeTooLowException();
-  }
 }

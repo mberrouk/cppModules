@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/27 16:23:59 by mberrouk          #+#    #+#             */
+/*   Updated: 2023/12/27 16:27:54 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
-#include <exception>
 
 Bureaucrat::Bureaucrat(void) : name(""), grade(150) {
   std::cout << "Create Bureaucrat using default constructor." << std::endl;
