@@ -11,12 +11,12 @@ void swap(T val1, T val2) {
 }
 
 template <typename T>
-T min(T first, T second) {
+T min(T &first, T &second) {
 	return (second <= first) ? second : first;
 }
 
 template <typename T>
-T max(T first, T second) {
+T max(T &first, T &second) {
 	return (second >= first) ? second : first;
 }
 
