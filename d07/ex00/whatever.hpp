@@ -6,7 +6,7 @@
 /*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 19:45:18 by mberrouk          #+#    #+#             */
-/*   Updated: 2024/01/03 19:45:19 by mberrouk         ###   ########.fr       */
+/*   Updated: 2024/01/03 19:50:22 by mberrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define WHATEVER_HPP
 
 template <typename T>
-void swap(T val1, T val2) {
+void swap(T& val1, T& val2) {
 	T tmp;
 
 	tmp = val1;
@@ -23,12 +23,12 @@ void swap(T val1, T val2) {
 }
 
 template <typename T>
-T min(T &first, T &second) {
+T& min(T &first, T &second) {
 	return (second <= first) ? second : first;
 }
 
 template <typename T>
-T max(T &first, T &second) {
+T& max(T &first, T &second) {
 	return (second >= first) ? second : first;
 }
 

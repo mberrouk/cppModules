@@ -6,7 +6,7 @@
 /*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 19:45:30 by mberrouk          #+#    #+#             */
-/*   Updated: 2024/01/03 19:45:31 by mberrouk         ###   ########.fr       */
+/*   Updated: 2024/01/03 19:52:35 by mberrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main () {
 	for (int i = 0 ; i < 10 ; i++)
 		std::cout << arr[i] << " " ;
 	std::cout << std::endl;
-	iter<int>(arr, 10, fo);
+	iter<int, void(*)(int&)>(arr, 10, fo);
 	for (int i = 0 ; i < 10 ; i++)
 		std::cout << arr[i] << " " ;
 	std::cout << std::endl;
@@ -41,7 +41,7 @@ int main () {
 	std::cout << std::endl;
 
 	std::cout << "--> ";
-	iter<std::string>(test, 10, fo);
+	iter<std::string, void(*)(std::string&)>(test, 10, fo);
 	for (int i = 0 ; i < 10 ; i++)
 		std::cout << test[i] << " " ;
 	std::cout << std::endl;
