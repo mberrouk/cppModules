@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   easyfind.tpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/07 20:31:54 by mberrouk          #+#    #+#             */
+/*   Updated: 2024/01/07 20:33:02 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EASYFIND_TPP
 #define EASYFIND_TPP
-
-#include <stdexcept>
 
 template <typename T> int easyfind(const T &container, int first_occur) {
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   MutantStack.hpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/07 20:33:50 by mberrouk          #+#    #+#             */
+/*   Updated: 2024/01/07 20:38:52 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MUTANSTACK_HPP
 #define MutantStack_HPP
 
@@ -15,16 +27,28 @@ class MutantStack : public std::stack<T> {
 		}
 		typedef typename std::deque<T>::iterator iterator; 
 		typedef typename std::deque<T>::const_iterator const_iterator; 
-		iterator begin() const {
+		iterator begin() {
 			return this->c.begin();
 		}
-		iterator end() const {
+		const_iterator begin() const {
+			return this->c.begin();
+		}
+		iterator end(){
 			return this->c.end();
 		}
-		iterator rend() const {
+		const_iterator end() const {
+			return this->c.end();
+		}
+		iterator rend() {
 			return this->c.rend();
 		}
-		iterator rbegin() const {
+		const_iterator rend() const {
+			return this->c.rend();
+		}
+		iterator rbegin() {
+			return this->c.rbegin();
+		}
+		const_iterator rbegin() const {
 			return this->c.rbegin();
 		}
 };
