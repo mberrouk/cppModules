@@ -6,7 +6,7 @@
 /*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:31:11 by mberrouk          #+#    #+#             */
-/*   Updated: 2024/01/07 20:31:12 by mberrouk         ###   ########.fr       */
+/*   Updated: 2024/01/07 21:49:35 by mberrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@
 #include <vector>
 
 class Span {
-  const unsigned int _N;
+  unsigned int _N;
   std::vector<int> _arr;
   unsigned int _indexPos;
 
 public:
   Span(unsigned int n);
+  Span();
   Span &operator=(const Span &);
   ~Span() {}
 

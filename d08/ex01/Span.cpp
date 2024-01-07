@@ -6,13 +6,15 @@
 /*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:31:07 by mberrouk          #+#    #+#             */
-/*   Updated: 2024/01/07 20:31:08 by mberrouk         ###   ########.fr       */
+/*   Updated: 2024/01/07 21:51:02 by mberrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
 Span::Span(unsigned int n) : _N(n), _arr(n), _indexPos(0) {}
+
+Span::Span() : _N(0), _arr(0), _indexPos(0) {}
 
 void Span::addNumber(int num) {
 
@@ -85,6 +87,16 @@ void Span::addRandNumber(unsigned int size) {
     std::srand(time(0) + i);
     this->addNumber(std::rand() % size);
   }
+}
+
+Span &Span::operator=(const Span &arg) {
+  
+  if (this != &arg) {
+    this->_N = arg._N;
+    this->_arr = arg._arr;
+    this->_indexPos = arg._indexPos;
+  }
+  return (*this);
 }
 
 std::ostream &operator<<(std::ostream &cot, const Span &obj) {
