@@ -1,8 +1,6 @@
 #include "Span.hpp"
-#include <climits>
 
 int main() {
-  // std::cout << << std::endl
   try {
 		Span sp = Span(5);
 
