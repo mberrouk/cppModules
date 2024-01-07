@@ -21,7 +21,7 @@ template <typename T> class MutantStack : public std::stack<T> {
 public:
   MutantStack() {}
   ~MutantStack() {}
-  MutantStack(const MutantStack &obj) { *this = obj; }
+  MutantStack(const MutantStack &obj) : std::stack<T>(obj) { *this = obj; }
   MutantStack<T> &operator=(const MutantStack &src) {
     if (this != &src)
       *(std::stack<T> *)this = *(std::stack<T> *)&src;
