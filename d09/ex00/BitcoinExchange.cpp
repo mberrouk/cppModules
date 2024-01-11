@@ -159,7 +159,8 @@ void BitcoinExchange::data_base_parse(string &line) {
 
   size_t commaPos = -1;
 
-  if ((commaPos = line.find(",")) == string::npos)
+  if ((commaPos = line.find(",")) == string::npos || 
+			(line.begin() + commaPos + 1) == line.end())
     err_msg(DATE_FORMAT_ERR);
 
   string key(line.begin(), line.begin() + commaPos);
