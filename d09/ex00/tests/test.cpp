@@ -1,4 +1,4 @@
-#include "BitcoinExchange.hpp"
+#include "../BitcoinExchange.hpp"
 #include <exception>
 
 int main(int argc, char *argv[]) {
@@ -21,4 +21,7 @@ int main(int argc, char *argv[]) {
   } catch (std::exception &e) {
     std::cout << "Error\r" << e.what() << std::endl;
   }
+	catch (...) {
+		std::cout << "Error: undefined!" << std::endl;
+	}
 }
