@@ -48,7 +48,7 @@ public:
   /* Data-Base Processing */
   void readData();
   void data_base_parse(string &line);
-  void dataBHeader_check(string line);
+  void header_check(string &line, string sep, string sec_fild);
 };
 
 #endif

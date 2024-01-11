@@ -73,16 +73,16 @@ bool BitcoinExchange::is_DateFormat(const string &input) {
   return (true);
 }
 
-void BitcoinExchange::dataBHeader_check(string line) {
+void BitcoinExchange::header_check(string &line, string sep, string sec_fild) {
 
   size_t commaPos = -1;
 
-  if ((commaPos = line.find(",")) == string::npos ||
+  if ((commaPos = line.find(sep)) == string::npos ||
       string(line.begin(), line.begin() + commaPos) != "date")
     err_msg(DATA_BASE_HEADER_ERR);
 
   if (line.begin() + (commaPos + 1) != line.end())
-    if (string(line.begin() + (commaPos + 1), line.end()) == "exchange_rate")
+    if (string(line.begin() + (commaPos + 1), line.end()) == sec_fild)
       return;
 
   err_msg(DATA_BASE_HEADER_ERR);
@@ -157,7 +157,7 @@ void BitcoinExchange::readData() {
   while (std::getline(file, value)) {
     trim_string(value);
     if (!value.empty()) {
-      dataBHeader_check(value);
+			header_check(value, ",", "exchange_rate");
       break;
     }
   }
