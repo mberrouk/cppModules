@@ -1,14 +1,22 @@
 #include "BitcoinExchange.hpp"
-#include <exception>
 
 int main(int argc, char *argv[]) {
+
+  (void)argv;
   BitcoinExchange btc;
-	(void)argv;
+
   try {
+
     if (argc < 2)
-      btc.err_msg(btc.FILE_OPEN_ERR); 
-		btc.readData();
+      btc.err_msg(btc.FILE_OPEN_ERR);
+
+    btc.readData();
+		btc.printData();
+
   } catch (std::exception &e) {
-		std::cout << "Error\r" << e.what() << std::endl;
-	}
+
+    std::cout << "Error: " << e.what() << std::endl;
+  }
+
+	return (0);
 }

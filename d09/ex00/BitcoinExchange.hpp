@@ -1,14 +1,10 @@
 #ifndef BITCOINEXCHANGE_HPP
 #define BITCOINEXCHANGE_HPP
 
-#include <cstdlib>
-#include <exception>
+#include <algorithm>
 #include <fstream>
-#include <iomanip>
 #include <iostream>
-#include <iterator>
 #include <map>
-#include <sstream>
 #include <string>
 
 typedef std::string string;
@@ -18,7 +14,10 @@ private:
   std::map<string, string> _dataBase;
 
 public:
-  /* enum class eErros provides a scoped enumeration */
+  /* Data-Base Path macro */
+#define DATA_BASE_PATH "tests/data.csv"
+
+  /* enumeration errors */
   enum eErrors {
     FILE_OPEN_ERR = 1,
     EMPTY_DTBASE_ERR,
@@ -27,9 +26,7 @@ public:
     DATE_FORMAT_ERR,
   };
 
-  /* Data-Base Path macro */
-#define DATA_BASE_PATH "tests/data.csv"
-
+  /* Canonical Form */
   BitcoinExchange();
   BitcoinExchange(const BitcoinExchange &);
   BitcoinExchange &operator=(const BitcoinExchange &);
@@ -45,9 +42,11 @@ public:
   void trim_string(string &value);
   bool is_DateFormat(const string &input);
 
-	/* Templates Utilities */
-  template <typename T> void print_map(typename T::iterator mapIt) {
-    for (mapIt = _dataBase.begin(); mapIt != _dataBase.end(); ++mapIt)
+  /* Templates Utilities */
+  template <typename T>
+  void print_map(typename T::iterator mapIt, T &map) const {
+
+    for (; mapIt != map.end(); ++mapIt)
       std::cout << mapIt->first << " " << mapIt->second << std::endl;
   }
 
@@ -55,6 +54,7 @@ public:
   void readData();
   void data_base_parse(string &line);
   void header_check(string &line, string sep, string sec_fild);
+  void printData();
 };
 
 #endif

@@ -1,24 +1,22 @@
 #include "BitcoinExchange.hpp"
-#include <algorithm>
-#include <cctype>
-#include <cstddef>
-#include <exception>
-#include <iostream>
-#include <iterator>
-#include <ostream>
-#include <stdexcept>
-#include <string>
+
+/* Canonical Form */
 
 BitcoinExchange::BitcoinExchange() {}
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &) {}
-// BitcoinExchange& BitcoinExchange::operator=( const BitcoinExchange& src ) {
-// return (src);} // TODO copy assign operator
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &src) { *this = src; }
+
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &src) {
+  if (this != &src) {
+    _dataBase = src._dataBase;
+  }
+  return (*this);
+}
+
 BitcoinExchange::~BitcoinExchange() {}
 
-/**
- * err_msg :
- *
- */
+/* Error handling */
+
 void BitcoinExchange::err_msg(eErrors error) const {
   switch (error) {
   case FILE_OPEN_ERR:
@@ -37,6 +35,46 @@ void BitcoinExchange::err_msg(eErrors error) const {
   default:
     throw std::runtime_error("Exiting The Program !");
   };
+}
+
+/* Utilities */
+
+bool BitcoinExchange::is_space(unsigned char c) { return std::isspace(c); }
+
+bool BitcoinExchange::not_space(unsigned char c) { return !std::isspace(c); }
+
+bool BitcoinExchange::is_float(const string &strfloat) {
+
+  int comma = 0;
+  char num;
+
+  for (size_t i = 0; i < strfloat.size(); ++i) {
+    num = strfloat.at(i);
+    if ((num < 48 || num > 57) && num != 46) {
+      std::cout << strfloat << std::endl;
+      return false;
+    }
+    if (num == 46) {
+      if (i == 0)
+        return (false);
+      (comma++);
+    }
+  }
+  if (strfloat.at(strfloat.size() - 1) == 46)
+    return (false);
+
+  return (comma > 1 ? false : true);
+}
+
+void BitcoinExchange::trim_string(string &value) {
+
+  if (!value.empty())
+    value.erase(value.begin(),
+                std::find_if(value.begin(), value.end(), not_space));
+
+  if (!value.empty())
+    value.erase(std::find_if(value.begin(), value.end(), is_space),
+                value.end());
 }
 
 /**
@@ -88,62 +126,7 @@ void BitcoinExchange::header_check(string &line, string sep, string sec_fild) {
   err_msg(DATA_BASE_HEADER_ERR);
 }
 
-bool BitcoinExchange::is_float(const string &strfloat) {
-
-  int comma = 0;
-  char num;
-
-  for (size_t i = 0; i < strfloat.size(); ++i) {
-    num = strfloat.at(i);
-    if ((num < 48 || num > 57) && num != 46) {
-      std::cout << strfloat << std::endl;
-      return false;
-    }
-    if (num == 46) {
-      if (i == 0)
-        return (false);
-      (comma++);
-    }
-  }
-  if (strfloat.at(strfloat.size() - 1) == 46)
-    return (false);
-
-  return (comma > 1 ? false : true);
-}
-
-void BitcoinExchange::data_base_parse(string &line) {
-
-  size_t commaPos = -1;
-
-  if ((commaPos = line.find(",")) == string::npos)
-    err_msg(DATE_FORMAT_ERR);
-
-  string key(line.begin(), line.begin() + commaPos);
-  if (!is_DateFormat(key))
-    err_msg(DATE_FORMAT_ERR);
-
-  string value(line.begin() + 11, line.end());
-  if (is_float(value) == false) {
-    err_msg(DATE_FORMAT_ERR);
-  }
-
-  _dataBase.insert(std::make_pair(key, value));
-}
-
-bool BitcoinExchange::is_space(unsigned char c) { return std::isspace(c); }
-
-bool BitcoinExchange::not_space(unsigned char c) { return !std::isspace(c); }
-
-void BitcoinExchange::trim_string(string &value) {
-
-  if (!value.empty())
-    value.erase(value.begin(),
-                std::find_if(value.begin(), value.end(), not_space));
-
-  if (!value.empty())
-    value.erase(std::find_if(value.begin(), value.end(), is_space),
-                value.end());
-}
+/* Data-Base Processing */
 
 void BitcoinExchange::readData() {
 
@@ -170,7 +153,29 @@ void BitcoinExchange::readData() {
   file.close();
   if (_dataBase.empty())
     err_msg(EMPTY_DTBASE_ERR);
+}
 
-  print_map<std::map<string, string>>(
-      std::map<string, string>::iterator(_dataBase.begin()));
+void BitcoinExchange::data_base_parse(string &line) {
+
+  size_t commaPos = -1;
+
+  if ((commaPos = line.find(",")) == string::npos)
+    err_msg(DATE_FORMAT_ERR);
+
+  string key(line.begin(), line.begin() + commaPos);
+  if (!is_DateFormat(key))
+    err_msg(DATE_FORMAT_ERR);
+
+  string value(line.begin() + 11, line.end());
+  if (is_float(value) == false) {
+    err_msg(DATE_FORMAT_ERR);
+  }
+
+  _dataBase.insert(std::make_pair(key, value));
+}
+
+void BitcoinExchange::printData() {
+
+  print_map<std::map<string, string> >(
+      std::map<string, string>::iterator(_dataBase.begin()), _dataBase);
 }
