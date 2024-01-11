@@ -27,7 +27,7 @@ public:
     DATE_FORMAT_ERR,
   };
 
-	/* Data-Base Path macro */
+  /* Data-Base Path macro */
 #define DATA_BASE_PATH "tests/data.csv"
 
   BitcoinExchange();
@@ -39,11 +39,17 @@ public:
   void err_msg(eErrors error) const;
 
   /* Utilities */
-  static bool is_char(unsigned char c);
   static bool is_space(unsigned char c);
+  static bool not_space(unsigned char c);
   bool is_float(const string &strfloat);
   void trim_string(string &value);
   bool is_DateFormat(const string &input);
+
+	/* Templates Utilities */
+  template <typename T> void print_map(typename T::iterator mapIt) {
+    for (mapIt = _dataBase.begin(); mapIt != _dataBase.end(); ++mapIt)
+      std::cout << mapIt->first << " " << mapIt->second << std::endl;
+  }
 
   /* Data-Base Processing */
   void readData();

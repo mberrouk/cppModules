@@ -130,19 +130,18 @@ void BitcoinExchange::data_base_parse(string &line) {
   _dataBase.insert(std::make_pair(key, value));
 }
 
+bool BitcoinExchange::is_space(unsigned char c) { return std::isspace(c); }
 
-bool BitcoinExchange::is_char(unsigned char c) { return std::isspace(c); }
-
-bool BitcoinExchange::is_space(unsigned char c) { return !std::isspace(c); }
+bool BitcoinExchange::not_space(unsigned char c) { return !std::isspace(c); }
 
 void BitcoinExchange::trim_string(string &value) {
 
   if (!value.empty())
     value.erase(value.begin(),
-                std::find_if(value.begin(), value.end(), is_space));
+                std::find_if(value.begin(), value.end(), not_space));
 
   if (!value.empty())
-    value.erase(std::find_if(value.begin(), value.end(), is_char),
+    value.erase(std::find_if(value.begin(), value.end(), is_space),
                 value.end());
 }
 
@@ -157,7 +156,7 @@ void BitcoinExchange::readData() {
   while (std::getline(file, value)) {
     trim_string(value);
     if (!value.empty()) {
-			header_check(value, ",", "exchange_rate");
+      header_check(value, ",", "exchange_rate");
       break;
     }
   }
@@ -171,7 +170,7 @@ void BitcoinExchange::readData() {
   file.close();
   if (_dataBase.empty())
     err_msg(EMPTY_DTBASE_ERR);
-  std::map<string, string>::iterator mapIt;
-  for (mapIt = _dataBase.begin(); mapIt != _dataBase.end(); ++mapIt)
-    std::cout << mapIt->first << " " << mapIt->second << std::endl;
+
+  print_map<std::map<string, string>>(
+      std::map<string, string>::iterator(_dataBase.begin()));
 }
