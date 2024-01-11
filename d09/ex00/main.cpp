@@ -1,9 +1,14 @@
 #include "BitcoinExchange.hpp"
+#include <exception>
 
 int main(int argc, char *argv[]) {
   BitcoinExchange btc;
-
-	if (argc < 2)
-    return btc.err_msg(FILE_OPEN_ERR);
-  btc.get_DataBase(argv[1]);
+	(void)argv;
+  try {
+    if (argc < 2)
+      btc.err_msg(btc.FILE_OPEN_ERR); 
+		btc.readData();
+  } catch (std::exception &e) {
+		std::cout << "Error\r" << e.what() << std::endl;
+	}
 }

@@ -2,36 +2,53 @@
 #define BITCOINEXCHANGE_HPP
 
 #include <cstdlib>
-#include <iomanip>
-#include <sstream>
-#include <iterator>
+#include <exception>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
-#include <string>
+#include <iterator>
 #include <map>
-
-enum eErrors {
-  FILE_OPEN_ERR = 1,
-  EMPTY_DTBASE_ERR,
-  DATA_BASE_HEADER_ERR,
-  DATA_BASE_FORMAT_ERR,
-	DATE_FORMAT_ERR,
-};
-
+#include <sstream>
+#include <string>
 
 typedef std::string string;
 
 class BitcoinExchange {
-	std::map<string, string> _dataBase;
-	public:
-	BitcoinExchange();
-	BitcoinExchange( const BitcoinExchange& );
-	BitcoinExchange& operator=(const BitcoinExchange& );
-	~BitcoinExchange();
+private:
+  std::map<string, string> _dataBase;
 
-	int get_DataBase(std::string filePath);
-	bool is_DateFormat(const std::string &input);
-	int err_msg(eErrors error);
+public:
+  /* enum class eErros provides a scoped enumeration */
+  enum eErrors {
+    FILE_OPEN_ERR = 1,
+    EMPTY_DTBASE_ERR,
+    DATA_BASE_HEADER_ERR,
+    DATA_BASE_FORMAT_ERR,
+    DATE_FORMAT_ERR,
+  };
+
+	/* Data-Base Path macro */
+#define DATA_BASE_PATH "tests/data.csv"
+
+  BitcoinExchange();
+  BitcoinExchange(const BitcoinExchange &);
+  BitcoinExchange &operator=(const BitcoinExchange &);
+  ~BitcoinExchange();
+
+  /* Error handling */
+  void err_msg(eErrors error) const;
+
+  /* Utilities */
+  static bool is_char(unsigned char c);
+  static bool is_space(unsigned char c);
+  bool is_float(const string &strfloat);
+  void trim_string(string &value);
+  bool is_DateFormat(const string &input);
+
+  /* Data-Base Processing */
+  void readData();
+  void data_base_parse(string &line);
+  void dataBHeader_check(string line);
 };
 
 #endif

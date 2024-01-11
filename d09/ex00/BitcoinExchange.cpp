@@ -1,117 +1,177 @@
 #include "BitcoinExchange.hpp"
+#include <algorithm>
+#include <cctype>
+#include <cstddef>
+#include <exception>
+#include <iostream>
+#include <iterator>
+#include <ostream>
+#include <stdexcept>
+#include <string>
 
 BitcoinExchange::BitcoinExchange() {}
-BitcoinExchange::BitcoinExchange( const BitcoinExchange&  ) {}
-// BitcoinExchange& BitcoinExchange::operator=( const BitcoinExchange& src ) { return (src);} // TODO copy assign operator
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &) {}
+// BitcoinExchange& BitcoinExchange::operator=( const BitcoinExchange& src ) {
+// return (src);} // TODO copy assign operator
 BitcoinExchange::~BitcoinExchange() {}
 
 /**
  * err_msg :
- * TODO: throw exceptions
  *
  */
-int BitcoinExchange::err_msg(eErrors error) {
-  std::cout << "Error: ";
+void BitcoinExchange::err_msg(eErrors error) const {
   switch (error) {
-  case 1:
-    std::cout << "Could Not Open File!" << std::endl;
-    return (error);
-  case 2:
-    std::cout << "Data Base Is Empty!" << std::endl;
-    return (error);
-  case 3:
-    std::cout
-        << "The database should begin with the fields date,exchange_rate !"
-        << std::endl;
-    return (error);
-	case 4:
-		std::cout
-			<< "Please ensure that the data base is in the format of 'data,floating-point_value' !"
-			<< std::endl;
-		return (error);
-	case 5:
-		std::cout
-			<< "Data is either not in the date format or represents an invalid date !"
-			<< std::endl;
-		return (error);
-
+  case FILE_OPEN_ERR:
+    throw std::runtime_error("Could Not Open File !");
+  case EMPTY_DTBASE_ERR:
+    throw std::runtime_error("Could Not Open Data Base File Or Is Empty !");
+  case DATA_BASE_HEADER_ERR:
+    throw std::runtime_error(
+        "The database should begin with the fields date,exchange_rate !");
+  case DATA_BASE_FORMAT_ERR:
+    throw std::runtime_error("Please ensure that the data base is in the "
+                             "format of 'date,floating-point_value' !");
+  case DATE_FORMAT_ERR:
+    throw std::runtime_error("Data is either not in the Data Base Format or "
+                             "represents an invalid Date !");
+  default:
+    throw std::runtime_error("Exiting The Program !");
   };
-  return (error);
 }
-
 
 /**
  * is_DateFormat:
- * TODO: use sstream insted of atoi 
+ * TODO: use sstream insted of atoi
  */
-bool BitcoinExchange::is_DateFormat(const std::string &input) {
-	if (input.size() != 10) return (false);
-	if (input[4] != '-' || input[7] != '-') return (false);
+bool BitcoinExchange::is_DateFormat(const string &input) {
 
-	std::string strYear(input.substr(0, 4));
-	std::string strMonth(input.substr(5, 2));
-	std::string strDay(input.substr(8, 2));
+  if (input.size() != 10)
+    return (false);
 
-	int year = std::atoi(strYear.c_str());
-	int month = std::atoi(strMonth.c_str());
-	int day = std::atoi(strDay.c_str());
+  if (input.find_first_not_of("-0123456789") != string::npos)
+    return (false);
 
-	if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31) return (false);
-	if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) return (false);
-	if (month == 2) {
-		bool isLeapYear = ((!(year % 4) && !(year % 100)) || !(year % 400));
-		if ((isLeapYear && day > 29) || (!(isLeapYear) && day > 28)) return (false);
-	}
-	return (true);
+  if (input[4] != '-' || input[7] != '-')
+    return (false);
+
+  int year = std::atoi(input.substr(0, 4).c_str());
+  int month = std::atoi(input.substr(5, 2).c_str());
+  int day = std::atoi(input.substr(8, 2).c_str());
+
+  if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31)
+    return (false);
+
+  if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
+    return (false);
+
+  if (month == 2) {
+    bool isLeapYear = ((!(year % 4) && !(year % 100)) || !(year % 400));
+    if ((isLeapYear && day > 29) || (!(isLeapYear) && day > 28))
+      return (false);
+  }
+
+  return (true);
 }
 
-/**
- * get_DataBase:
- * TODO: use _dataBase;
- * TODO: check value format (float)
- * TODO: close file
- *
- */
-int BitcoinExchange::get_DataBase(std::string filePath) {
-
-	
-  std::ifstream file(filePath.c_str());
-
-  if (!file)
-    return err_msg(FILE_OPEN_ERR);
-
-  std::istream_iterator<std::string> fileIt(file);
-  std::istream_iterator<std::string> eos;
+void BitcoinExchange::dataBHeader_check(string line) {
 
   size_t commaPos = -1;
 
-	std::map<std::string, double> storage;
-  
-	std::map<std::string, double>::iterator mapIt;
-	if ((commaPos = (*fileIt).find(",")) == std::string::npos)
-    return (err_msg(DATA_BASE_HEADER_ERR));
+  if ((commaPos = line.find(",")) == string::npos ||
+      string(line.begin(), line.begin() + commaPos) != "date")
+    err_msg(DATA_BASE_HEADER_ERR);
 
-  if (fileIt->begin() + (commaPos + 1) != fileIt->end())
-    if (std::string(fileIt->begin() + (commaPos + 1), fileIt->end()) !=
-        "exchange_rate")
-      return (err_msg(DATA_BASE_HEADER_ERR));
+  if (line.begin() + (commaPos + 1) != line.end())
+    if (string(line.begin() + (commaPos + 1), line.end()) == "exchange_rate")
+      return;
 
+  err_msg(DATA_BASE_HEADER_ERR);
+}
 
-  while (++fileIt != eos) {
-    if ((commaPos = (*fileIt).find(",")) == std::string::npos)
-      return (err_msg(DATA_BASE_FORMAT_ERR));
-    std::string key(fileIt->begin(), fileIt->begin() + commaPos);
-		if (!is_DateFormat(key)) return (err_msg(DATE_FORMAT_ERR));
-		std::stringstream is(std::string(fileIt->begin() + 11, fileIt->end()).c_str());
-		double val;
-		is >> val;
-		// std::cout << "-> " << std::setprecision (15) << val << " "<< is.str() << std::endl;
-		storage.insert(std::make_pair(key, static_cast<double>(val)));
+bool BitcoinExchange::is_float(const string &strfloat) {
+
+  int comma = 0;
+  char num;
+
+  for (size_t i = 0; i < strfloat.size(); ++i) {
+    num = strfloat.at(i);
+    if ((num < 48 || num > 57) && num != 46) {
+      std::cout << strfloat << std::endl;
+      return false;
+    }
+    if (num == 46) {
+      if (i == 0)
+        return (false);
+      (comma++);
+    }
+  }
+  if (strfloat.at(strfloat.size() - 1) == 46)
+    return (false);
+
+  return (comma > 1 ? false : true);
+}
+
+void BitcoinExchange::data_base_parse(string &line) {
+
+  size_t commaPos = -1;
+
+  if ((commaPos = line.find(",")) == string::npos)
+    err_msg(DATE_FORMAT_ERR);
+
+  string key(line.begin(), line.begin() + commaPos);
+  if (!is_DateFormat(key))
+    err_msg(DATE_FORMAT_ERR);
+
+  string value(line.begin() + 11, line.end());
+  if (is_float(value) == false) {
+    err_msg(DATE_FORMAT_ERR);
   }
 
-		for (mapIt = storage.begin(); mapIt != storage.end(); ++mapIt) 
-			std::cout << std::setprecision(15) << mapIt->first << " " << mapIt->second << std::endl;
+  _dataBase.insert(std::make_pair(key, value));
+}
 
-  return (0);
 
+bool BitcoinExchange::is_char(unsigned char c) { return std::isspace(c); }
+
+bool BitcoinExchange::is_space(unsigned char c) { return !std::isspace(c); }
+
+void BitcoinExchange::trim_string(string &value) {
+
+  if (!value.empty())
+    value.erase(value.begin(),
+                std::find_if(value.begin(), value.end(), is_space));
+
+  if (!value.empty())
+    value.erase(std::find_if(value.begin(), value.end(), is_char),
+                value.end());
+}
+
+void BitcoinExchange::readData() {
+
+  std::ifstream file(DATA_BASE_PATH);
+  string value;
+
+  if (!(file.is_open()))
+    err_msg(EMPTY_DTBASE_ERR);
+
+  while (std::getline(file, value)) {
+    trim_string(value);
+    if (!value.empty()) {
+      dataBHeader_check(value);
+      break;
+    }
+  }
+
+  while (std::getline(file, value)) {
+    trim_string(value);
+    if (!value.empty())
+      data_base_parse(value);
+  }
+
+  file.close();
+  if (_dataBase.empty())
+    err_msg(EMPTY_DTBASE_ERR);
+  std::map<string, string>::iterator mapIt;
+  for (mapIt = _dataBase.begin(); mapIt != _dataBase.end(); ++mapIt)
+    std::cout << mapIt->first << " " << mapIt->second << std::endl;
 }
