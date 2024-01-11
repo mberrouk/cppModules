@@ -2,14 +2,13 @@
 
 /* Canonical Form */
 
-BitcoinExchange::BitcoinExchange() {}
+BitcoinExchange::BitcoinExchange() {
+    readData();
+}
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &src) { *this = src; }
 
-BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &src) {
-  if (this != &src) {
-    _dataBase = src._dataBase;
-  }
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &) {
   return (*this);
 }
 
@@ -175,8 +174,8 @@ void BitcoinExchange::data_base_parse(string &line) {
   _dataBase.insert(std::make_pair(key, value));
 }
 
-void BitcoinExchange::printData() {
+void BitcoinExchange::printData() const {
 
   print_map<std::map<string, string> >(
-      std::map<string, string>::iterator(_dataBase.begin()), _dataBase);
+      std::map<string, string>::const_iterator(_dataBase.begin()), _dataBase);
 }

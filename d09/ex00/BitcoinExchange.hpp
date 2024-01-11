@@ -11,7 +11,12 @@ typedef std::string string;
 
 class BitcoinExchange {
 private:
+
   std::map<string, string> _dataBase;
+
+  /* Data-Base Processing */
+  void readData();
+  void data_base_parse(string &line);
 
 public:
   /* Data-Base Path macro */
@@ -41,20 +46,18 @@ public:
   bool is_float(const string &strfloat);
   void trim_string(string &value);
   bool is_DateFormat(const string &input);
+  void header_check(string &line, string sep, string sec_fild);
 
   /* Templates Utilities */
   template <typename T>
-  void print_map(typename T::iterator mapIt, T &map) const {
+  void print_map(typename T::const_iterator mapIt, const T &map) const {
 
     for (; mapIt != map.end(); ++mapIt)
       std::cout << mapIt->first << " " << mapIt->second << std::endl;
   }
 
   /* Data-Base Processing */
-  void readData();
-  void data_base_parse(string &line);
-  void header_check(string &line, string sep, string sec_fild);
-  void printData();
+  void printData() const;
 };
 
 #endif
