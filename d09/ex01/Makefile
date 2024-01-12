@@ -6,15 +6,14 @@
 #    By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/03 19:45:14 by mberrouk          #+#    #+#              #
-#    Updated: 2024/01/07 20:34:07 by mberrouk         ###   ########.fr        #
+#    Updated: 2024/01/12 23:53:49 by mberrouk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC       = main.cpp BitcoinExchange.cpp
-INCLUDES  = BitcoinExchange.hpp
+SRC       = main.cpp RPN.cpp
+INCLUDES  = RPN.hpp
 CPPFLAGS  = -Wall -Wextra -Werror -std=c++98
-NAME      = btc
-TEST      = btcTEST
+NAME      = RPN
 OBJS      = $(SRC:.cpp=.o)
 CC        = c++
 
@@ -26,14 +25,8 @@ $(NAME)   : $(INCLUDES) $(OBJS)
 %.o       : %.cpp
 	$(CC) $(CPPFLAGS) -c $^ -o $@
 
-test      : $(TEST) tests/test.cpp BitcoinExchange.cpp
-
-$(TEST)   : $(INCLUDES) 
-	$(CC)  $(CPPFLAGS) tests/test.cpp BitcoinExchange.cpp -o $(TEST)
-
 clean     :
 	$(RM) *.o
-	$(RM) $(TEST)
 
 fclean    : clean
 	$(RM) $(NAME)
