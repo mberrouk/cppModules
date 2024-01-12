@@ -6,7 +6,7 @@
 /*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 08:05:36 by mberrouk          #+#    #+#             */
-/*   Updated: 2024/01/12 08:05:37 by mberrouk         ###   ########.fr       */
+/*   Updated: 2024/01/13 00:27:18 by mberrouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   try {
 
     if (argc < 2)
-      btc.err_msg(btc.FILE_OPEN_ERR);
+      FILE_OPEN_ERR;
 
 		btc.readInput(argv[1]);
 
