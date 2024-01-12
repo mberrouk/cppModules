@@ -280,7 +280,7 @@ void BitcoinExchange::input_parse(string line) {
 		std::cout << "Error: bad input ==> " << date << std::endl;
 		return;
 	}
-	if (valNum > INT_MAX) {
+	if (valNum > 1000) {
 		std::cout << "Error: too large a number." <<  std::endl;
 		return;
 	}
