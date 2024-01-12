@@ -19,6 +19,8 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <climits>
+#include <iomanip>
 
 typedef std::string string;
 
