@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/12 08:05:32 by mberrouk          #+#    #+#             */
+/*   Updated: 2024/01/12 08:11:54 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BITCOINEXCHANGE_HPP
 #define BITCOINEXCHANGE_HPP
 
@@ -6,6 +18,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <sstream>
 
 typedef std::string string;
 
@@ -30,6 +43,7 @@ public:
     DATA_BASE_FORMAT_ERR,
     DATE_FORMAT_ERR,
 		INPUT_VALUE_ERR,
+    INPUT_HEADER_ERR,
   };
 
   /* Canonical Form */
@@ -47,7 +61,7 @@ public:
   bool is_float(const string &strfloat);
   void trim_string(string &value);
   bool is_DateFormat(const string &input);
-  void header_check(string &line, string sep, string sec_fild);
+  void header_check(string &line, string sep, string sec_fild, eErrors err);
 	double string_to_double(string &str, bool &flag);
 
   /* Templates Utilities */

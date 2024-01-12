@@ -1,8 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mberrouk <mberrouk@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/12 08:05:26 by mberrouk          #+#    #+#             */
+/*   Updated: 2024/01/12 09:06:00 by mberrouk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "BitcoinExchange.hpp"
-#include <climits>
-#include <fstream>
-#include <iostream>
-#include <sstream>
 
 /* Canonical Form */
 
@@ -42,6 +50,9 @@ void BitcoinExchange::err_msg(eErrors error) const {
 	case INPUT_VALUE_ERR:
 		throw std::runtime_error("Please ensure that the input is in the "
                              "format of 'date | floating-value' !");
+  case INPUT_HEADER_ERR: 
+    throw std::runtime_error("The input should begin with `date | value` !");
+  
   default:
     throw std::runtime_error("Exiting The Program !");
   };
@@ -78,13 +89,15 @@ bool BitcoinExchange::is_float(const string &strfloat) {
 void BitcoinExchange::trim_string(string &value) {
 
 	std::string::iterator it;
-	for (it = value.begin(); it != value.end() && is_space(*it); ++it) ;
+	for (it = value.begin(); it != value.end() && is_space(*it); ++it)
+  ;
 
   if (!value.empty() && it != value.begin())
     value.erase(value.begin(), it);
 
 	string::reverse_iterator rit;
-	for (rit = value.rbegin(); rit != value.rend() && is_space(*rit); ++rit) ;
+	for (rit = value.rbegin(); rit != value.rend() && is_space(*rit); ++rit)
+  ;
 
   if (!value.empty() && rit != value.rbegin())
     value.erase(rit.base(), value.end());
@@ -125,20 +138,20 @@ bool BitcoinExchange::is_DateFormat(const string &input) {
   return (true);
 }
 
-void BitcoinExchange::header_check(string &line, string sep, string sec_fild) {
+void BitcoinExchange::header_check(string &line, string sep, string sec_fild, eErrors err) {
 
   size_t commaPos = -1;
 
 	if ((commaPos = line.find(sep)) == string::npos ||
       string(line.begin(), line.begin() + commaPos) != "date") {
-    err_msg(DATA_BASE_HEADER_ERR);
+    err_msg(err);
 	}
   
 	if (line.begin() + (commaPos + sep.size()) != line.end())
     if (string(line.begin() + (commaPos + sep.size()), line.end()) == sec_fild)
       return;
 
-  err_msg(DATA_BASE_HEADER_ERR);
+  err_msg(err);
 }
 
 double BitcoinExchange::string_to_double(string &str, bool &flag) {
@@ -167,7 +180,7 @@ void BitcoinExchange::readData() {
   while (std::getline(file, value)) {
     trim_string(value);
     if (!value.empty()) {
-      header_check(value, ",", "exchange_rate");
+      header_check(value, ",", "exchange_rate", DATA_BASE_HEADER_ERR);
       break;
     }
   }
@@ -222,7 +235,7 @@ void BitcoinExchange::readInput(string inPath) {
 	while (std::getline(file, line)) {
 		trim_string(line);
 		if (!line.empty()) {
-			header_check(line, " | ", "value");
+			header_check(line, " | ", "value", INPUT_HEADER_ERR);
 			break;
 		}
 	}
@@ -255,7 +268,6 @@ void BitcoinExchange::input_parse(string line) {
 		return;
 	}
 	
-
 	string value(line.begin() + sep + 1, line.end());
 	trim_string(value);
 	if (is_float(value) == false) {
@@ -273,10 +285,11 @@ void BitcoinExchange::input_parse(string line) {
 		return;
 	}
 
-  std::map<string, string>::iterator itlow;
-	itlow = _dataBase.lower_bound(date);
+  std::map<string, string>::iterator itlow = _dataBase.lower_bound(date);
+  if (itlow != _dataBase.begin() &&  itlow->first != date)
+    --itlow;
 
-	std::cout << date << "=> " << value << " = " 
+	std::cout << std::setprecision(15) << date << " => " << value << " = " 
 		<< valNum * string_to_double((itlow->second), is_converted) << std::endl;
 
 	is_converted = true;
