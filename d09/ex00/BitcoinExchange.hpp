@@ -29,6 +29,7 @@ public:
     DATA_BASE_HEADER_ERR,
     DATA_BASE_FORMAT_ERR,
     DATE_FORMAT_ERR,
+		INPUT_VALUE_ERR,
   };
 
   /* Canonical Form */
@@ -47,6 +48,7 @@ public:
   void trim_string(string &value);
   bool is_DateFormat(const string &input);
   void header_check(string &line, string sep, string sec_fild);
+	double string_to_double(string &str, bool &flag);
 
   /* Templates Utilities */
   template <typename T>
@@ -58,6 +60,10 @@ public:
 
   /* Data-Base Processing */
   void printData() const;
+
+	/* Input processing */
+	void readInput(string);
+	void input_parse(string);
 };
 
 #endif

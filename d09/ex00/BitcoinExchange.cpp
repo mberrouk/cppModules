@@ -1,4 +1,8 @@
 #include "BitcoinExchange.hpp"
+#include <climits>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 /* Canonical Form */
 
@@ -18,19 +22,26 @@ BitcoinExchange::~BitcoinExchange() {}
 
 void BitcoinExchange::err_msg(eErrors error) const {
   switch (error) {
+
   case FILE_OPEN_ERR:
     throw std::runtime_error("Could Not Open File !");
-  case EMPTY_DTBASE_ERR:
+  
+	case EMPTY_DTBASE_ERR:
     throw std::runtime_error("Could Not Open Data Base File Or Is Empty !");
-  case DATA_BASE_HEADER_ERR:
+  
+	case DATA_BASE_HEADER_ERR:
     throw std::runtime_error(
         "The database should begin with the fields date,exchange_rate !");
-  case DATA_BASE_FORMAT_ERR:
+  
+	case DATA_BASE_FORMAT_ERR:
     throw std::runtime_error("Please ensure that the data base is in the "
-                             "format of 'date,floating-point_value' !");
+                             "format of 'date,floating-value' !");
   case DATE_FORMAT_ERR:
     throw std::runtime_error("Data is either not in the Data Base Format or "
                              "represents an invalid Date !");
+	case INPUT_VALUE_ERR:
+		throw std::runtime_error("Please ensure that the input is in the "
+                             "format of 'date | floating-value' !");
   default:
     throw std::runtime_error("Exiting The Program !");
   };
@@ -50,7 +61,6 @@ bool BitcoinExchange::is_float(const string &strfloat) {
   for (size_t i = 0; i < strfloat.size(); ++i) {
     num = strfloat.at(i);
     if ((num < 48 || num > 57) && num != 46) {
-      std::cout << strfloat << std::endl;
       return false;
     }
     if (num == 46) {
@@ -67,13 +77,18 @@ bool BitcoinExchange::is_float(const string &strfloat) {
 
 void BitcoinExchange::trim_string(string &value) {
 
-  if (!value.empty())
-    value.erase(value.begin(),
-                std::find_if(value.begin(), value.end(), not_space));
+	std::string::iterator it;
+	for (it = value.begin(); it != value.end() && is_space(*it); ++it) ;
 
-  if (!value.empty())
-    value.erase(std::find_if(value.begin(), value.end(), is_space),
-                value.end());
+  if (!value.empty() && it != value.begin())
+    value.erase(value.begin(), it);
+
+	string::reverse_iterator rit;
+	for (rit = value.rbegin(); rit != value.rend() && is_space(*rit); ++rit) ;
+
+  if (!value.empty() && rit != value.rbegin())
+    value.erase(rit.base(), value.end());
+	
 }
 
 /**
@@ -114,15 +129,29 @@ void BitcoinExchange::header_check(string &line, string sep, string sec_fild) {
 
   size_t commaPos = -1;
 
-  if ((commaPos = line.find(sep)) == string::npos ||
-      string(line.begin(), line.begin() + commaPos) != "date")
+	if ((commaPos = line.find(sep)) == string::npos ||
+      string(line.begin(), line.begin() + commaPos) != "date") {
     err_msg(DATA_BASE_HEADER_ERR);
-
-  if (line.begin() + (commaPos + 1) != line.end())
-    if (string(line.begin() + (commaPos + 1), line.end()) == sec_fild)
+	}
+  
+	if (line.begin() + (commaPos + sep.size()) != line.end())
+    if (string(line.begin() + (commaPos + sep.size()), line.end()) == sec_fild)
       return;
 
   err_msg(DATA_BASE_HEADER_ERR);
+}
+
+double BitcoinExchange::string_to_double(string &str, bool &flag) {
+
+	std::stringstream strstream(str);
+	double d;
+
+	strstream >> std::noskipws >> d;
+
+	if (!strstream.eof() || strstream.fail())
+		flag = false;
+
+	return (d);
 }
 
 /* Data-Base Processing */
@@ -168,7 +197,7 @@ void BitcoinExchange::data_base_parse(string &line) {
 
   string value(line.begin() + 11, line.end());
   if (is_float(value) == false) {
-    err_msg(DATE_FORMAT_ERR);
+    err_msg(DATA_BASE_FORMAT_ERR);
   }
 
   _dataBase.insert(std::make_pair(key, value));
@@ -178,4 +207,77 @@ void BitcoinExchange::printData() const {
 
   print_map<std::map<string, string> >(
       std::map<string, string>::const_iterator(_dataBase.begin()), _dataBase);
+}
+
+/* Input Processing */
+
+void BitcoinExchange::readInput(string inPath) {
+
+	std::ifstream file(inPath.c_str());
+	string line;
+
+	if (!(file.is_open()))
+		err_msg(FILE_OPEN_ERR);
+
+	while (std::getline(file, line)) {
+		trim_string(line);
+		if (!line.empty()) {
+			header_check(line, " | ", "value");
+			break;
+		}
+	}
+
+	while (std::getline(file, line)) {
+		trim_string(line);
+		if (!line.empty())
+			input_parse(line);
+	}
+
+	file.close();
+}
+
+void BitcoinExchange::input_parse(string line) {
+
+	size_t sep = -1;
+	bool is_converted = true;
+	double valNum;
+
+	if ((sep = line.find("|")) == string::npos || 
+			(line.begin() + sep + 1) == line.end()) {
+		std::cout << "Error: bad input ==> " << line << std::endl;
+		return;
+	}
+
+	string date(line.begin(), line.begin() + sep);
+	trim_string(date);
+	if (!(is_DateFormat(date)) || date < (_dataBase.begin())->first) {
+		std::cout << "Error: bad input ==> " << date << std::endl;
+		return;
+	}
+	
+
+	string value(line.begin() + sep + 1, line.end());
+	trim_string(value);
+	if (is_float(value) == false) {
+		std::cout << "Error: not a positive number." << std::endl;
+		return;
+	}
+
+	valNum = string_to_double(value, is_converted);
+	if (!is_converted) {
+		std::cout << "Error: bad input ==> " << date << std::endl;
+		return;
+	}
+	if (valNum > INT_MAX) {
+		std::cout << "Error: too large a number." <<  std::endl;
+		return;
+	}
+
+  std::map<string, string>::iterator itlow;
+	itlow = _dataBase.lower_bound(date);
+
+	std::cout << date << "=> " << value << " = " 
+		<< valNum * string_to_double((itlow->second), is_converted) << std::endl;
+
+	is_converted = true;
 }

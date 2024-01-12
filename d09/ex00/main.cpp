@@ -3,14 +3,14 @@
 int main(int argc, char *argv[]) {
 
   (void)argv;
-  const BitcoinExchange btc;
+  BitcoinExchange btc;
 
   try {
 
     if (argc < 2)
       btc.err_msg(btc.FILE_OPEN_ERR);
 
-		btc.printData();
+		btc.readInput(argv[1]);
 
   } catch (std::exception &e) {
 
